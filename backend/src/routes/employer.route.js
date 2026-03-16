@@ -3,6 +3,7 @@ const router = express.Router();
 const { verifyToken, isEmployer } = require('../middleware/auth.middleware');
 const {
     getCompanyProfile,
+    createCompanyProfile,
     updateCompanyProfile,
     getMyJobs,
     createJob
@@ -13,6 +14,7 @@ router.use(verifyToken, isEmployer);
 
 // Company Profile endpoints
 router.get('/company', getCompanyProfile);
+router.post('/company', createCompanyProfile);
 router.put('/company', updateCompanyProfile);
 
 // Job Management endpoints
