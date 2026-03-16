@@ -60,8 +60,10 @@ const Login = () => {
       // Save token + user via context
       login(data.user, data.token);
 
-      // Always redirect to home page after login
-      navigate('/', { replace: true });
+      // Redirect based on role
+      const roleId = data.user?.roleId;
+      if (roleId === 1) navigate('/admin/dashboard', { replace: true });
+      else navigate('/', { replace: true });
     } catch (err) {
       setServerError(err.message);
     } finally {
