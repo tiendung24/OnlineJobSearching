@@ -4,7 +4,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-
+const authRoutes = require('./routes/auth.route');
+const { connectDB } = require('./config/db');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ─── Routes ───
+app.use('/api/auth', authRoutes);
 
 
 app.get('/', async (req, res) => {
@@ -41,9 +43,7 @@ app.use((err, req, res, next) => {
 
 const startServer = async () => {
     try {
-        const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/onlinejobsearching';
-        await mongoose.connect(mongoUri);
-        console.log('✅ Database connected successfully');
+        await connectDB();
 
         app.listen(port, () => {
             console.log(`🚀 Server running at http://${hostname}:${port}/`);
