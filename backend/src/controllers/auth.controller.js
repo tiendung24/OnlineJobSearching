@@ -54,15 +54,8 @@ const register = async (req, res) => {
                         INSERT INTO JobSeekers (JobSeekerID, FullName) 
                         VALUES (@JobSeekerID, @FullName)
                     `);
-            } else if (roleId === 3) {
-                await request
-                    .input('EmployerID', sql.Int, userId)
-                    .input('CompanyName', sql.NVarChar, fullName)
-                    .query(`
-                        INSERT INTO Companies (EmployerID, CompanyName, IsProfileComplete) 
-                        VALUES (@EmployerID, @CompanyName, 0)
-                    `);
             }
+            // For roleId === 3 (Employer), they will create their Company profile later (UC02)
 
             await transaction.commit();
 

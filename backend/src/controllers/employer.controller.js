@@ -22,6 +22,43 @@ const getCompanyProfile = async (req, res) => {
     }
 };
 
+// POST /api/employer/company
+// Create a new company profile (UC02)
+const createCompanyProfile = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const { CompanyName, TaxCode, Address, Description, Size, Industry, Website, LogoUrl } = req.body;
+
+        if (!CompanyName) {
+            return res.status(400).json({ message: 'Company Name is required.' });
+        }
+
+        // Check if company already exists
+        const checkResult = await sql.query`SELECT CompanyID FROM Companies WHERE EmployerID = ${userId}`;
+        if (checkResult.recordset.length > 0) {
+            return res.status(400).json({ message: 'Company profile already exists. Use PUT to update.' });
+        }
+
+        const result = await sql.query`
+            INSERT INTO Companies (
+                EmployerID, CompanyName, TaxCode, Address, Description, 
+                Size, Industry, Website, LogoUrl, IsProfileComplete
+            )
+            OUTPUT INSERTED.*
+            VALUES (
+                ${userId}, ${CompanyName}, ${TaxCode || null}, ${Address || null}, 
+                ${Description || null}, ${Size || null}, ${Industry || null}, 
+                ${Website || null}, ${LogoUrl || null}, 1
+            )
+        `;
+
+        res.status(201).json({ message: 'Company created successfully.', company: result.recordset[0] });
+    } catch (err) {
+        console.error('createCompanyProfile Error:', err);
+        res.status(500).json({ message: 'Server error creating company profile.' });
+    }
+};
+
 // PUT /api/employer/company
 // Update company profile
 const updateCompanyProfile = async (req, res) => {
@@ -155,6 +192,7 @@ const createJob = async (req, res) => {
 
 module.exports = {
     getCompanyProfile,
+    createCompanyProfile,
     updateCompanyProfile,
     getMyJobs,
     createJob
