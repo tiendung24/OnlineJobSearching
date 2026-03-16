@@ -5,6 +5,7 @@ const CompanyProfile = () => {
   const { token } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [isNew, setIsNew] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   
   const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ const CompanyProfile = () => {
       
       if (res.ok) {
         const data = await res.json();
+        setIsNew(false);
         // pre-fill the form with existing data
         setFormData({
           CompanyName: data.CompanyName || '',
@@ -42,6 +44,8 @@ const CompanyProfile = () => {
           Description: data.Description || '',
           LogoUrl: data.LogoUrl || ''
         });
+      } else if (res.status === 404) {
+        setIsNew(true);
       }
     } catch (error) {
       console.error('Error fetching company:', error);
@@ -62,7 +66,7 @@ const CompanyProfile = () => {
 
     try {
       const res = await fetch('http://localhost:3000/api/employer/company', {
-        method: 'PUT',
+        method: isNew ? 'POST' : 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -76,7 +80,8 @@ const CompanyProfile = () => {
         throw new Error(data.message || 'Failed to update company profile');
       }
 
-      setMessage({ type: 'success', text: 'Company profile updated successfully! You can now post jobs.' });
+      setIsNew(false);
+      setMessage({ type: 'success', text: isNew ? 'Company created successfully! You can now post jobs.' : 'Company profile updated successfully!' });
     } catch (error) {
       setMessage({ type: 'error', text: error.message });
     } finally {
@@ -261,7 +266,7 @@ const CompanyProfile = () => {
                 Saving...
               </>
             ) : (
-              'Save Profile Changes'
+              isNew ? 'Create Company' : 'Save Profile Changes'
             )}
           </button>
         </div>
