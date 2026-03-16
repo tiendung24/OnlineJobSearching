@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth.route');
 const adminRoutes = require('./routes/admin.route');
+const employerRoutes = require('./routes/employer.route');
 const { connectDB } = require('./config/db');
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // ─── Routes ───
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/employer', employerRoutes);
 
 
 app.get('/', async (req, res) => {
