@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const JobManager = () => {
@@ -172,7 +173,7 @@ const JobManager = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-slate-900">0</span>
+                          <span className="font-bold text-slate-900">{job.ApplicationCount || 0}</span>
                           <span className="text-xs text-slate-400">candidates</span>
                         </div>
                       </td>
@@ -181,9 +182,12 @@ const JobManager = () => {
                         <div className="text-red-500 font-medium">exp: {new Date(job.ExpiredAt).toLocaleDateString()}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <button className="text-brand-600 hover:text-brand-900 font-bold text-sm bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded transition-colors hidden group-hover:inline-block">
+                        <Link
+                          to={`/employer/applicants?jobId=${job.JobID}`}
+                          className="text-brand-600 hover:text-brand-900 font-bold text-sm bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded transition-colors hidden group-hover:inline-block"
+                        >
                           View
-                        </button>
+                        </Link>
                       </td>
                     </tr>
                   ))}

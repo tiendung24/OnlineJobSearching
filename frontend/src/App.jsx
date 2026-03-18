@@ -31,6 +31,8 @@ import EmployerDashboard from './pages/employer/Dashboard.jsx';
 import JobManager from './pages/employer/JobManager.jsx';
 import Applicants from './pages/employer/Applicants.jsx';
 import Employees from './pages/employer/Employees.jsx';
+import EmployeeDetail from './pages/employer/EmployeeDetail.jsx';
+import EmployeeEdit from './pages/employer/EmployeeEdit.jsx';
 
 // Employee Pages
 import { MyJob } from './pages/employee/MyJob.jsx';
@@ -79,6 +81,8 @@ function App() {
               <Route path="jobs" element={<JobManager />} />
               <Route path="applicants" element={<Applicants />} />
               <Route path="employees" element={<Employees />} />
+              <Route path="employees/:employeeId" element={<EmployeeDetail />} />
+              <Route path="employees/:employeeId/edit" element={<EmployeeEdit />} />
             </Route>
           </Route>
 

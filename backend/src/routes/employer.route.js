@@ -6,7 +6,14 @@ const {
     createCompanyProfile,
     updateCompanyProfile,
     getMyJobs,
-    createJob
+    createJob,
+    getJobApplications,
+    getApplicationDetail,
+    updateApplicationStatus,
+    getEmployees,
+    updateEmployeeStatus,
+    getEmployeeDetail,
+    updateEmployeeProfile
 } = require('../controllers/employer.controller');
 
 // All routes require user to be logged in and have Employer role
@@ -20,5 +27,12 @@ router.put('/company', updateCompanyProfile);
 // Job Management endpoints
 router.get('/jobs', getMyJobs);
 router.post('/jobs', createJob);
+router.get('/jobs/:jobId/applications', getJobApplications);
+router.get('/applications/:applicationId', getApplicationDetail);
+router.patch('/applications/:applicationId/status', updateApplicationStatus);
+router.get('/employees', getEmployees);
+router.get('/employees/:employeeId', getEmployeeDetail);
+router.patch('/employees/:employeeId/profile', updateEmployeeProfile);
+router.patch('/employees/:employeeId/status', updateEmployeeStatus);
 
 module.exports = router;
