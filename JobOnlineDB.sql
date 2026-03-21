@@ -107,7 +107,13 @@ CREATE TABLE Employees (
     CompanyID INT NOT NULL,
     JobSeekerID INT NOT NULL,
     JobID INT NOT NULL, -- Trúng tuyển từ Job nào
-    Status VARCHAR(50) DEFAULT 'Active', -- Active, Resigned, Terminated
+    Status VARCHAR(50) DEFAULT 'Active', -- Active, On Leave, Resigned, Terminated
+    CurrentJobTitle NVARCHAR(200) NULL,
+    Department NVARCHAR(100) NULL,
+    Team NVARCHAR(100) NULL,
+    CompanyEmail VARCHAR(100) NULL,
+    CompanyPhone VARCHAR(20) NULL,
+    InternalNotes NVARCHAR(MAX) NULL,
     HiredDate DATETIME DEFAULT GETDATE(),
     EndDate DATETIME NULL,
     FOREIGN KEY (CompanyID) REFERENCES Companies(CompanyID),
@@ -161,5 +167,5 @@ VALUES (3, 3, 2, N'Gửi quý công ty CV của em', 'Hired/Approved', GETDATE()
 
 -- Insert Employees (Hệ quả của việc Trần Thị B trúng tuyển tại VNG)
 -- CompanyID = 2 (VNG), JobSeekerID = 3 (Trần Thị B), JobID = 3
-INSERT INTO Employees (CompanyID, JobSeekerID, JobID, Status, HiredDate) 
-VALUES (2, 3, 3, 'Active', GETDATE()-1);
+INSERT INTO Employees (CompanyID, JobSeekerID, JobID, Status, CurrentJobTitle, Department, Team, CompanyEmail, CompanyPhone, InternalNotes, HiredDate) 
+VALUES (2, 3, 3, 'Active', N'Senior Digital Marketing Specialist', N'Marketing', N'Growth Team', 'tran.b@vng.example.com', '02899998888', N'Ứng viên onboard tốt, đang phụ trách chiến dịch social quý này.', GETDATE()-1);
