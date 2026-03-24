@@ -30,7 +30,7 @@ const EmployerLayout = () => {
     }
   ];
 
-  return <DashboardLayout role="Employer" links={employerLinks} />;
+  return <DashboardLayout role="Employer" links={employerLinks} showBackHome />;
 };
 
 export default EmployerLayout;
