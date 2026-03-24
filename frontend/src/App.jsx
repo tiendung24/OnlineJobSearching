@@ -36,6 +36,7 @@ import EmployeeEdit from './pages/employer/EmployeeEdit.jsx';
 
 // Employee Pages
 import { MyJob } from './pages/employee/MyJob.jsx';
+import EmployeeProfile from './pages/employee/EmployeeProfile.jsx';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/Dashboard.jsx';
@@ -91,6 +92,7 @@ function App() {
             <Route path="/employee" element={<EmployeeLayout />}>
               <Route index element={<Navigate to="/employee/my-job" replace />} />
               <Route path="my-job" element={<MyJob />} />
+              <Route path="profile" element={<EmployeeProfile />} />
             </Route>
           </Route>
 
