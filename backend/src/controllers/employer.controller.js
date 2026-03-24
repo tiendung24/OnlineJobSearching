@@ -302,6 +302,18 @@ const updateCompanyProfile = async (req, res) => {
 };
 
 
+// POST /api/employer/company/upload-logo
+// Upload company logo image
+const uploadLogo = (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: 'Không có file nào được tải lên.' });
+    }
+    // Build public URL using request host
+    const logoUrl = `${req.protocol}://${req.get('host')}/uploads/logos/${req.file.filename}`;
+    res.json({ logoUrl });
+};
+
+
 // --- JOB POSTING (UC01) ---
 
 // GET /api/employer/jobs
@@ -894,6 +906,7 @@ module.exports = {
     getCompanyProfile,
     createCompanyProfile,
     updateCompanyProfile,
+    uploadLogo,
     getMyJobs,
     createJob,
     getJobApplications,

@@ -1,4 +1,4 @@
-﻿
+
 CREATE DATABASE JobOnlineDB;
 GO
 USE JobOnlineDB;
@@ -42,6 +42,8 @@ CREATE TABLE Companies (
     Description NVARCHAR(MAX),
     LogoUrl NVARCHAR(500),
     Size NVARCHAR(50), -- Vd: 10-50 nhân viên
+    Industry NVARCHAR(100),
+    Website NVARCHAR(255),
     IsProfileComplete BIT DEFAULT 0, -- Ràng buộc: =1 mới được đăng Job
     FOREIGN KEY (EmployerID) REFERENCES Users(UserID)
 );
