@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { verifyToken, isEmployer } = require('../middleware/auth.middleware');
+const { uploadLogo: uploadLogoMiddleware } = require('../middleware/upload.middleware');
 const {
     getCompanyProfile,
     createCompanyProfile,
     updateCompanyProfile,
+    uploadLogo,
     getMyJobs,
     createJob
 } = require('../controllers/employer.controller');
@@ -16,6 +18,7 @@ router.use(verifyToken, isEmployer);
 router.get('/company', getCompanyProfile);
 router.post('/company', createCompanyProfile);
 router.put('/company', updateCompanyProfile);
+router.post('/company/upload-logo', uploadLogoMiddleware, uploadLogo);
 
 // Job Management endpoints
 router.get('/jobs', getMyJobs);
