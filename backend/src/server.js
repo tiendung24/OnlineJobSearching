@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth.route');
 const adminRoutes = require('./routes/admin.route');
 const employerRoutes = require('./routes/employer.route');
+const companiesRoutes = require('./routes/companies.route');
 const { connectDB } = require('./config/db');
 
 const app = express();
@@ -19,10 +21,14 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ─── Static Files (uploaded images) ───
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // ─── Routes ───
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/employer', employerRoutes);
+app.use('/api/companies', companiesRoutes);
 
 
 app.get('/', async (req, res) => {
